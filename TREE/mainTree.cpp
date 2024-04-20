@@ -2,57 +2,58 @@
 #include "TreeHeader.h"
 
 int main() {
-    Isi_Tree P;
-    int n, i;
+    Isi_Tree X;
+    int jml;
 
-    printf("Masukkan jumlah node dalam Tree (max 20): ");
-    scanf("%d", &n);
+    printf("Masukkan jumlah node dalam pohon non-biner: ");
+    scanf("%d", &jml);
 
-    Create_tree(P, n);
+    if (jml > jml_maks) {
+        printf("Jumlah node melebihi kapasitas maksimum.\n");
+        return 1;
+    }
 
-    printf("Traversal Preorder: ");
-    PreOrder(P);
-    printf("\n");
+    printf("Masukkan nilai dan posisi parent, first son, serta next brother untuk setiap node:\n");
 
-    printf("Traversal Inorder: ");
-    InOrder(P);
-    printf("\n");
+    for (int i = 1; i <= jml; i++) {
+        printf("Node ke-%d: ", i);
+        scanf(" %c %d %d %d", &X[i].info, &X[i].ps_pr, &X[i].ps_fs, &X[i].ps_nb);
+    }
 
-    printf("Traversal Postorder: ");
-    PostOrder(P);
-    printf("\n");
+    printf("\nPreOrder : ");
+    PreOrder(X);
+    printf("\nInOrder : ");
+    InOrder(X);
+    printf("\nPostOrder : ");
+    PostOrder(X);
+    printf("\nLevel Order : ");
+    Level_order(X, jml);
 
-    printf("Traversal Levelorder: ");
-    Level_order(P, n);
-    printf("\n");
+    char node_to_search;
+    printf("\n\nMasukkan nilai node yang ingin dicari: ");
+    scanf(" %c", &node_to_search);
+    if (Search(X, node_to_search)) {
+        printf("Node dengan nilai %c ditemukan dalam pohon.\n", node_to_search);
+    } else {
+        printf("Node dengan nilai %c tidak ditemukan dalam pohon.\n", node_to_search);
+    }
 
-//    printf("Print Tree: \n");
-//    PrintTree(P);
+    char node_to_delete;
+    printf("\nMasukkan nilai node yang ingin dihapus: ");
+    scanf(" %c", &node_to_delete);
+    DeleteNode(X, node_to_delete);
+    printf("Setelah menghapus node dengan nilai %c:\n", node_to_delete);
+    printf("\nPreOrder : ");
+    PreOrder(X);
+    printf("\nInOrder : ");
+    InOrder(X);
+    printf("\nPostOrder : ");
+    PostOrder(X);
+    printf("\nLevel Order : ");
+    Level_order(X, jml);
 
-    printf("Jumlah elemen dalam pohon: %d\n", nbElmt(P));
-    printf("Jumlah daun dalam pohon: %d\n", nbDaun(P));
-
-    infotype x;
-    printf("Masukkan info yang ingin dicari: ");
-    scanf(" %c", &x);
-
-    if (Search(P, x))
-        printf("Info ditemukan\n");
-    else
-        printf("Info tidak ditemukan\n");
-
-    printf("Masukkan info untuk mencari level: ");
-    scanf(" %c", &x);
-
-    int level = Level(P, x);
-
-    if (level == -1)
-        printf("Node tidak ditemukan\n");
-    else
-        printf("Level node %c adalah %d\n", x, level);
-
-    printf("Depth pohon adalah: %d\n", Depth(P));
+    printf("\nTree:\n");
+    PrintTree(X);
 
     return 0;
 }
-
